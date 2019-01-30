@@ -1,4 +1,4 @@
-/** Instance method of Object */
+/** Instance methods of object */
 var type = function (o) {
     return Object.prototype.toString.call(o).match(/\[object (.*?)]/)[1].toLowerCase();
 };

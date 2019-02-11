@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Model</title>
+</head>
+<body>
+<div onclick="console.log(2)">
+    <button onclick="console.log(1)">HIT</button>
+</div>
+<div id="d">
+    <p onclick="console.log(1)">CLICK</p>
+</div>
+<script>
+    document.getElementById('d').addEventListener('click', function (e) {
+        console.log('I am the container of p ~');
+        e.stopPropagation();
+    }, true);
+</script>
+</body>
+</html>

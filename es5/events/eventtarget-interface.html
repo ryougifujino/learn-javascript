@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EventTarget Interface</title>
+</head>
+<body>
+<button id="hit">HIT</button>
+<script>
+    var hitButton = document.getElementById('hit');
+    hitButton.addEventListener('click', function (evt) {
+        console.log(this.firstChild.nodeValue);
+    }, /*{
+        handleEvent: function (evt) {
+            console.log('Oops~')
+        }
+    }*/{
+        capture: false,
+        once: true,
+        passive: true
+    });
+
+    setTimeout(function () {
+        hitButton.dispatchEvent(new Event('click'))
+    }, 1500);
+</script>
+</body>
+</html>

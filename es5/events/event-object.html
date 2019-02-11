@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Object</title>
+</head>
+<body>
+<a href="https://www.google.com">Google</a>
+
+<p id="para">Hello <em>World</em></p>
+<script>
+    document.getElementsByTagName('a')[0].addEventListener('click', function (e) {
+        if (e.cancelable) {
+            e.preventDefault();
+        }
+        console.log('Event.defaultPrevented', 'was ' + (!e.defaultPrevented ? 'not' : '') + 'called.');
+    });
+
+    function hide(e) {
+        console.log(this);
+        console.log(e.target);
+        console.log(this === e.currentTarget);  // 总是 true
+        console.log(this === e.target);  // 有可能不是 true
+        e.target.style.visibility = 'hidden';
+    }
+
+    para.addEventListener('click', hide, false);
+</script>
+</body>
+</html>

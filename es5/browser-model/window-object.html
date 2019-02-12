@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Window Object</title>
+    <style>
+        div {
+            border: red 1px solid;
+            position: absolute;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+<div>A</div>
+<script>
+    var e = document.querySelector('div');
+    var start = null;
+
+    function step(timestamp) {
+        if (!start) start = timestamp;
+        var progress = timestamp - start;
+        e.style.left = progress / 10 + 'px';
+
+        if (progress < 10 * 1000) {
+            window.requestAnimationFrame(step);
+        }
+    }
+
+    window.requestAnimationFrame(step);
+</script>
+</body>
+</html>

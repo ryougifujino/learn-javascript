@@ -46,5 +46,68 @@ function getComplement(color) {
             throw new Error('Undefined color');
     }
 }
+
 console.log(getComplement(COLOR_GREEN) === COLOR_RED);  // true
 
+/** Symbol.for()，Symbol.keyFor() */
+console.log(Symbol.for('foo') === Symbol.for('foo'));   // true
+console.log(Symbol('foo') === Symbol('foo'));   // false
+
+console.log(Symbol.keyFor(Symbol.for('foo')));  // foo
+console.log(Symbol.keyFor(Symbol('foo')));  // undefined
+
+/** 内置的 Symbol 值 */
+// Symbol.hasInstance
+class MyClass {
+    [Symbol.hasInstance](foo) {
+        console.log(foo);
+        return foo instanceof Array;
+    }
+}
+
+console.log([1, 2] instanceof new MyClass());
+// output:
+// [ 1, 2 ]
+// true
+console.log([1, 2] instanceof MyClass); // false
+
+class Even {
+    static [Symbol.hasInstance](obj) {
+        return Number(obj) % 2 === 0;
+    }
+}
+
+//<=>
+// const Even = {
+//     [Symbol.hasInstance](obj) {
+//         return Number(obj) % 2 === 0;
+//     }
+// };
+console.log(1 instanceof Even);     // false
+console.log(2 instanceof Even);     // true
+
+// Symbol.species
+class MyArray extends Array {
+
+}
+
+a = new MyArray();
+console.log(a.map(a => a) instanceof MyArray);  // true
+
+class MyArray2 extends Array {
+    static get [Symbol.species]() {
+        return Array;
+    }
+}
+
+a = new MyArray2();
+console.log(a.map(a => a) instanceof MyArray2); // false
+
+// Symbol.replace
+let x = {
+    [Symbol.replace](...s) {
+        console.log(s);
+    }
+};
+
+'Hello'.replace(x, 'World');    // [ 'Hello', 'World' ]

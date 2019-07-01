@@ -103,3 +103,25 @@ proxy = new Proxy(() => "I am the target", {
     }
 });
 console.log(proxy(), proxy.call(), proxy.apply());
+
+/** construct() */
+let p = new Proxy(function () {
+}, {
+    construct(target, argArray, newTarget) {
+        console.log(target, argArray);
+        return {};  // 必须返回对象
+    }
+});
+
+new p(233);     // [Function] [ 233 ]
+
+/** defineProperty() */
+target = {};
+proxy = new Proxy(target, {
+    defineProperty(target, p, descriptor) {
+        Object.defineProperty(target, p, descriptor);
+        // return false;    如果返回false，就会导致添加新属性总是无效
+    }
+});
+proxy.foo = 'bar';
+console.log(proxy, target);     // { foo: 'bar' } { foo: 'bar' }
